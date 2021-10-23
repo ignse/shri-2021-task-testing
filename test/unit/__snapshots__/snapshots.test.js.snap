@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly ProductDetails 1`] = `
+<div
+  className="ProductDetails row"
+>
+  <div
+    className="col-12 col-sm-5 col-lg-4"
+  >
+    <img
+      className="Image"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkMAYAADkANVKH3ScAAAAASUVORK5CYII="
+    />
+  </div>
+  <div
+    className="col-12 col-sm-7 col-lg-6"
+  >
+    <h1
+      className="ProductDetails-Name"
+    >
+      bbb
+    </h1>
+    <p
+      className="ProductDetails-Description"
+    >
+      
+    </p>
+    <p
+      className="ProductDetails-Price fs-3"
+    >
+      $
+      200
+    </p>
+    <p>
+      <button
+        className="ProductDetails-AddToCart btn btn-primary btn-lg"
+        onClick={[Function]}
+      >
+        Add to Cart
+      </button>
+    </p>
+    <dl>
+      <dt>
+        Color
+      </dt>
+      <dd
+        className="ProductDetails-Color text-capitalize"
+      >
+        
+      </dd>
+      <dt>
+        Material
+      </dt>
+      <dd
+        className="ProductDetails-Material text-capitalize"
+      >
+        
+      </dd>
+    </dl>
+  </div>
+</div>
+`;
+
+exports[`renders correctly ProductItem 1`] = `
+<div
+  className="ProductItem card w-100 mb-4"
+  data-testid={2}
+>
+  <img
+    className="Image card-img-top"
+    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkMAYAADkANVKH3ScAAAAASUVORK5CYII="
+  />
+  <div
+    className="card-body"
+  >
+    <h5
+      className="ProductItem-Name card-title"
+    >
+      bbb
+    </h5>
+    <p
+      className="ProductItem-Price card-text"
+    >
+      $
+      200
+    </p>
+    <a
+      className="ProductItem-DetailsLink card-link"
+      href="/catalog/2"
+      onClick={[Function]}
+    >
+      Details
+    </a>
+  </div>
+</div>
+`;
