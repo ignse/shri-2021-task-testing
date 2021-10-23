@@ -15,6 +15,9 @@ import {Form} from '../../src/client/components/Form';
 import {Contacts} from '../../src/client/pages/Contacts';
 import {Delivery} from '../../src/client/pages/Delivery';
 import {Home} from '../../src/client/pages/Home';
+import {Catalog} from '../../src/client/pages/Catalog';
+import {Route} from 'react-router';
+import {Cart} from '../../src/client/pages/Cart';
 
 const api = new ExampleApi('');
 const cart = new CartApi();
@@ -59,13 +62,6 @@ it('renders correctly Form', () => {
 	expect(tree).toMatchSnapshot();
 });
 
-it('renders correctly CartBadge', () => {
-	const tree = renderer
-		.create(  <Provider store={store}><CartBadge id={111} /></Provider>)
-		.toJSON();
-	expect(tree).toMatchSnapshot();
-});
-
 it('renders correctly Contacts', () => {
 	const tree = renderer
 		.create( <Contacts />)
@@ -83,6 +79,53 @@ it('renders correctly Delivery', () => {
 it('renders correctly Home', () => {
 	const tree = renderer
 		.create( <Home />)
+		.toJSON();
+	expect(tree).toMatchSnapshot();
+});
+
+it('renders correctly Catalog', () => {
+	const products = [
+		{
+		id: 111,
+		name: 'aaaa',
+		description: 'aaaa desc',
+		price: 555,
+		color: 'black',
+		material: 'metal',
+		},
+		{
+			id: 222,
+			name: 'bbb',
+			description: 'bbb desc',
+			price: 1555,
+			color: 'white',
+			material: 'plastic',
+		}
+	];
+
+	store.dispatch({type: 'PRODUCTS_LOADED', products: products});
+
+	const tree = renderer
+		.create(<BrowserRouter path="/catalog" exact><Provider store={store}><Catalog /></Provider></BrowserRouter>)
+		.toJSON();
+	expect(tree).toMatchSnapshot();
+});
+
+it('renders correctly Cart', () => {
+	const product = {
+		id: 5,
+		name: 'Test product',
+		price: 500,
+		description: 'Test product desc',
+		material: 'Metal',
+		color: 'Blue'
+	};
+
+	store.dispatch({type: 'ADD_TO_CART', product: product});
+	store.dispatch({type: 'ADD_TO_CART', product: product});
+
+	const tree = renderer
+		.create(<BrowserRouter path="/cart" exact><Provider store={store}><Cart /></Provider></BrowserRouter>)
 		.toJSON();
 	expect(tree).toMatchSnapshot();
 });
