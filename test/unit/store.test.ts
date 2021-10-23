@@ -1,9 +1,49 @@
 import {initStore} from '../../src/client/store';
 import {CartApi, ExampleApi} from "../../src/client/api";
 import 'jest-localstorage-mock';
-import {CheckoutFormData} from "../../src/common/types";
+import {CartState, CheckoutFormData, CheckoutResponse, Product, ProductShortInfo} from "../../src/common/types";
+import {AxiosResponse} from "axios";
 
-const store = initStore(new ExampleApi(''), new CartApi());
+const getProduct = (id: number): Product => {
+	return {
+		id,
+		name: 'Тестовый продукт номер ' + id,
+		price: 10*id,
+		description: 'Какое-то описание',
+		material: 'Палстик',
+		color: 'Черный',
+	}
+}
+
+const getProductShortInfo = (id: number): ProductShortInfo => {
+	return {
+		id,
+		name: 'Тестовый продукт номер ' + id,
+		price: 10*id
+	}
+}
+
+class MockApi extends ExampleApi {
+	async getProducts() {
+		return {data: [
+			getProductShortInfo(1),
+			getProductShortInfo(2),
+			getProductShortInfo(3),
+			getProductShortInfo(4),
+			getProductShortInfo(5)
+		]} as AxiosResponse<ProductShortInfo[]>;
+	}
+
+	async getProductById(id: number) {
+		return {data: getProduct(10)} as AxiosResponse<Product>;
+	}
+
+	async checkout(form: CheckoutFormData, cart: CartState) {
+		return {data: {id : 12345}} as AxiosResponse<CheckoutResponse>;
+	}
+}
+
+const store = initStore(new MockApi(''), new CartApi());
 
 describe('Test Case for Reducer', () => {
 	it('Add to Cart', () => {
@@ -49,8 +89,21 @@ describe('Test Case for Reducer', () => {
 		expect(products).toStrictEqual(store.getState().products);
 	});
 
-	it('Checkout Complete', () => {
-		store.dispatch({type: 'CHECKOUT_COMPLETE', orderId: 123456});
-		expect(123456).toStrictEqual(store.getState().latestOrderId);
+	it('Checkout', async () => {
+
+		const product = {
+			id: 2,
+			name: 'bbb',
+			price: 200,
+			description: '',
+			material: '',
+			color: ''
+		};
+
+		await store.dispatch({type: 'ADD_TO_CART', product: product});
+
+		await store.dispatch({type: 'CHECKOUT', form: {name: '', phone: '', address: ''}, cart: store.getState().cart});
+		//await store.dispatch({type: 'CHECKOUT_COMPLETE', orderId: 123456});
+		expect(12345).toStrictEqual(store.getState().latestOrderId);
 	});
 });

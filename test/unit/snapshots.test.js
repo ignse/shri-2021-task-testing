@@ -110,22 +110,3 @@ it('renders correctly Catalog', () => {
 		.toJSON();
 	expect(tree).toMatchSnapshot();
 });
-
-it('renders correctly Cart', () => {
-	const product = {
-		id: 5,
-		name: 'Test product',
-		price: 500,
-		description: 'Test product desc',
-		material: 'Metal',
-		color: 'Blue'
-	};
-
-	store.dispatch({type: 'ADD_TO_CART', product: product});
-	store.dispatch({type: 'ADD_TO_CART', product: product});
-
-	const tree = renderer
-		.create(<BrowserRouter path="/cart" exact><Provider store={store}><Cart /></Provider></BrowserRouter>)
-		.toJSON();
-	expect(tree).toMatchSnapshot();
-});
