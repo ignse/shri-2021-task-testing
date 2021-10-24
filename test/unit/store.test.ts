@@ -10,7 +10,7 @@ const getProduct = (id: number): Product => {
 		name: 'Тестовый продукт номер ' + id,
 		price: 10*id,
 		description: 'Какое-то описание',
-		material: 'Палстик',
+		material: 'Пластик',
 		color: 'Черный',
 	}
 }
@@ -35,7 +35,7 @@ class MockApi extends ExampleApi {
 	}
 
 	async getProductById(id: number) {
-		return {data: getProduct(10)} as AxiosResponse<Product>;
+		return {data: getProduct(id)} as AxiosResponse<Product>;
 	}
 
 	async checkout(form: CheckoutFormData, cart: CartState) {
@@ -70,6 +70,32 @@ describe('Test Case for Reducer', () => {
 		expect(expected).toStrictEqual(store.getState().cart);
 	});
 
+	it('Add to Cart 2', () => {
+
+		const product = {
+			id: 3,
+			name: 'ccc',
+			price: 200,
+			description: '',
+			material: '',
+			color: ''
+		};
+
+		store.dispatch({type: 'CLEAR_CART'});
+		store.dispatch({type: 'ADD_TO_CART', product: product});
+		store.dispatch({type: 'ADD_TO_CART', product: product});
+
+		const expected = {
+			3: {
+				name: 'ccc',
+				count: 2,
+				price: 200
+			}
+		};
+
+		expect(expected).toStrictEqual(store.getState().cart);
+	});
+
 	it('Clear Cart', () => {
 		store.dispatch({type: 'CLEAR_CART'});
 		expect({}).toStrictEqual(store.getState().cart);
@@ -87,6 +113,11 @@ describe('Test Case for Reducer', () => {
 
 		store.dispatch({type: 'PRODUCTS_LOADED', products: products});
 		expect(products).toStrictEqual(store.getState().products);
+	});
+
+	it('Loaded Product', async () => {
+		await store.dispatch({type: 'PRODUCT_DETAILS_LOAD', id: 10});
+		expect({10: getProduct(10)}).toStrictEqual(store.getState().details);
 	});
 
 	it('Checkout', async () => {
