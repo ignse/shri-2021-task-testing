@@ -118,7 +118,7 @@ describe('Hermione', async function() {
 
         const button = await browser.$('.Form-Submit');
         await button.scrollIntoView();
-        await browser.waitUntil(() => button.isClickable(), 1000);
+        await browser.waitUntil(() => button.isClickable(), 1500);
         await button.click();
         await browser.pause(2000);
 
@@ -131,7 +131,7 @@ describe('Hermione', async function() {
     it('Burger menu check', async function () {
         const browser = this.browser;
         await browser.setWindowSize(575, 1000);
-        await browser.url("/hw/store/catalog/0");
+        await browser.url("/hw/store/catalog/1");
 
         await browser.assertView("burger-menu", ".navbar", {
             compositeImage: true,
