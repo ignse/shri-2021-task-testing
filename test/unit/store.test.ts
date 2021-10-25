@@ -70,32 +70,6 @@ describe('Test Case for Reducer', () => {
 		expect(expected).toStrictEqual(store.getState().cart);
 	});
 
-	it('Add to Cart 2', () => {
-
-		const product = {
-			id: 3,
-			name: 'ccc',
-			price: 200,
-			description: '',
-			material: '',
-			color: ''
-		};
-
-		store.dispatch({type: 'CLEAR_CART'});
-		store.dispatch({type: 'ADD_TO_CART', product: product});
-		store.dispatch({type: 'ADD_TO_CART', product: product});
-
-		const expected = {
-			3: {
-				name: 'ccc',
-				count: 2,
-				price: 200
-			}
-		};
-
-		expect(expected).toStrictEqual(store.getState().cart);
-	});
-
 	it('Clear Cart', () => {
 		store.dispatch({type: 'CLEAR_CART'});
 		expect({}).toStrictEqual(store.getState().cart);
@@ -134,7 +108,7 @@ describe('Test Case for Reducer', () => {
 		await store.dispatch({type: 'ADD_TO_CART', product: product});
 
 		await store.dispatch({type: 'CHECKOUT', form: {name: '', phone: '', address: ''}, cart: store.getState().cart});
-		//await store.dispatch({type: 'CHECKOUT_COMPLETE', orderId: 123456});
+
 		expect(12345).toStrictEqual(store.getState().latestOrderId);
 	});
 });
