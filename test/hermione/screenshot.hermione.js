@@ -131,20 +131,20 @@ describe('Hermione', async function() {
     it('Burger menu check', async function () {
         const browser = this.browser;
         await browser.setWindowSize(575, 1000);
-        await browser.url("/hw/store/catalog/1");
+        await browser.url("/hw/store/delivery");
 
         await browser.assertView("burger-menu", ".navbar", {
             compositeImage: true,
         });
 
         await browser.$(".navbar-toggler").click();
-        await browser.pause(1500);
+        await browser.pause(1000);
         await browser.assertView("burger-menu-opened", ".navbar", {
             compositeImage: true,
         });
 
         await browser.$(".nav-link.active").click();
-        await browser.pause(1500);
+        await browser.pause(1000);
         await browser.assertView("burger-menu-closed", ".navbar", {
             compositeImage: true,
         });
