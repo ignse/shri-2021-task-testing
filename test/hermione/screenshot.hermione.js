@@ -118,7 +118,7 @@ describe('Hermione', async function() {
 
         const button = await browser.$('.Form-Submit');
         await button.scrollIntoView();
-        await browser.waitUntil(() => button.isClickable(), 1500);
+        await browser.waitUntil(() => button.isClickable(), 2000);
         await button.click();
         await browser.pause(2000);
 
@@ -131,21 +131,43 @@ describe('Hermione', async function() {
     it('Burger menu check', async function () {
         const browser = this.browser;
         await browser.setWindowSize(575, 1000);
-        await browser.url("/hw/store/delivery");
+        await browser.url("/hw/store/catalog/1");
 
         await browser.assertView("burger-menu", ".navbar", {
             compositeImage: true,
         });
 
         await browser.$(".navbar-toggler").click();
-        await browser.pause(1000);
+        await browser.pause(1500);
         await browser.assertView("burger-menu-opened", ".navbar", {
             compositeImage: true,
         });
 
         await browser.$(".nav-link.active").click();
-        await browser.pause(1000);
+        await browser.pause(1500);
         await browser.assertView("burger-menu-closed", ".navbar", {
+            compositeImage: true,
+        });
+    });
+
+    it('Burger menu check2', async function () {
+        const browser = this.browser;
+        await browser.setWindowSize(575, 1000);
+        await browser.url("/hw/store/delivery");
+
+        await browser.assertView("burger-menu2", ".navbar", {
+            compositeImage: true,
+        });
+
+        await browser.$(".navbar-toggler").click();
+        await browser.pause(1000);
+        await browser.assertView("burger-menu-opened2", ".navbar", {
+            compositeImage: true,
+        });
+
+        await browser.$(".nav-link.active").click();
+        await browser.pause(1000);
+        await browser.assertView("burger-menu-closed2", ".navbar", {
             compositeImage: true,
         });
     });
